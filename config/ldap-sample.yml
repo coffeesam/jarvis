@@ -1,0 +1,64 @@
+development:
+  host: 'ldap-dev'
+  port: 389
+  auth:
+    method: simple
+    username:
+    password:
+  ad_suffix: '@example.com'
+  treebase: 'ou=sg,dc=example,dc=com'
+  account_key: 'sAMAccountName'
+  search_keys:
+    - dn
+    - sAMAccountName
+    - displayName
+    - mail
+    - department
+    - title
+    - objectcategory
+  auth_token: '12345'
+  valid_ips:
+    - '127.0.0.2'
+    - '127.0.0.1'
+test:
+  host: 'ldap-test'
+  port: 389
+  auth:
+    method: simple
+    username: 'test'
+    password: 'password'
+  ad_suffix: '@example.com'
+  treebase: 'ou=sg,dc=example,dc=com'
+  account_key: 'sAMAccountName'
+  search_keys:
+    - dn
+    - sAMAccountName
+    - displayName
+    - mail
+    - department
+    - title
+    - objectcategory
+  auth_token: '12345'
+  valid_ips:
+    - '127.0.0.1'
+production:
+  host: 'ldap-production'
+  port: 389
+  auth:
+    method: simple
+    username: ''
+    password: ''
+  ad_suffix: '@example.com'
+  treebase: 'ou=sg,dc=example,dc=com'
+  account_key: 'sAMAccountName'
+  search_keys:
+    - dn
+    - sAMAccountName
+    - displayName
+    - mail
+    - department
+    - title
+    - objectcategory
+  auth_token: '12345'
+  valid_ips:
+    - '127.0.0.1'
