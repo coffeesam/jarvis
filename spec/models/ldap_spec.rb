@@ -32,19 +32,22 @@ describe Ldap do
   describe "#authenticate" do
     context 'when connecting' do
       it 'attempts to create a LDAP connection' do
-          expect_any_instance_of(Net::LDAP).to receive(:bind).and_return(true)
-          expect_any_instance_of(Ldap).to receive(:search).and_return([])
-          expect(Net::LDAP).to receive(:new).with(
-            :host => 'testhost',
-            :port => 389,
-            :auth => {
-              :method => :simple,
-              :username => "test@example.com",
-              :password => 'password'
-            }
-          ).and_call_original
-          ldap = Ldap.new("test", "password")
-          ldap.authenticate
+        fake_entry = {sAMAccountName: 'test', mail:'test@example.com', objectcategory: 'CN=Person'}
+        fake_user = User.new(fake_entry)
+        expect_any_instance_of(Net::LDAP).to receive(:bind).and_return(true)
+        expect_any_instance_of(Ldap).to receive(:search).and_return([fake_user])
+        expect_any_instance_of(Ldap).to receive(:fetch_search_cache).and_call_original
+        expect(Net::LDAP).to receive(:new).with(
+          :host => 'testhost',
+          :port => 389,
+          :auth => {
+            :method => :simple,
+            :username => "test@example.com",
+            :password => 'password'
+          }
+        ).and_call_original
+        ldap = Ldap.new("test", "password")
+        ldap.authenticate
       end
     end
 
@@ -71,7 +74,7 @@ describe Ldap do
 
         it 'searches LDAP with the username that was passed in' do
           expect_any_instance_of(Ldap).
-            to receive(:search).with('sample').and_call_original
+            to receive(:retrieve_by_id).with('sample').and_call_original
           ldap = Ldap.new('sample', "password")
           ldap.authenticate
         end

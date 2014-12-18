@@ -1,5 +1,5 @@
 class LdapController < ApplicationController
-  before_action :check_token
+  before_action :check_token, except: [:welcome]
 
   def welcome
     render text: ''
@@ -15,11 +15,11 @@ class LdapController < ApplicationController
   end
 
   def search
-    ldap = Ldap.new(ldap_params[:username], ldap_params[:password])
-    if ldap.connect
-      render json: ldap.search(ldap_params[:q])
+    if Rails.cache.exist?(ldap_params[:username])
+      ldap = Ldap.new(ldap_params[:username])
+      render json: ldap.match(/#{ldap_params[:q]}/i)
     else
-      render json: { status: 'error', message: ldap.get_connection_message }
+      render json: { status: 'error', message: 'Please authenticate before performing search.' }
     end
   end
 

@@ -3,7 +3,7 @@ require 'net/ldap'
 class Ldap
   attr_accessor :username, :password, :connection, :user
 
-  def initialize(username, password)
+  def initialize(username=nil, password=nil)
     @user       = nil
     @username   = username
     @password   = password
@@ -20,26 +20,37 @@ class Ldap
     @connection.bind ? @connection : false
   end
 
-  def store_search_cache
-    Rails.cache.fetch(self.user.username) do
+  def fetch_search_cache
+    Rails.cache.fetch(@username) do
       self.search("*")
     end
   end
 
   def authenticate
     if @connection = self.connect
-      if self.user = self.search(@username).first
-        self.store_search_cache
+      if self.user = self.retrieve_by_id(@username)
       end
     end
     self.user.presence
   end
 
-  def search(username)
-    self.retrieve(username)
+  def retrieve_by_id(username)
+    users = self.fetch_search_cache
+    users.detect do |user|
+      username == user.username
+    end
   end
 
-  def retrieve(username)
+  def match(pattern)
+    users = self.fetch_search_cache
+    users_array = []
+    users.each do |user|
+      users_array << user if user.display_name.match(pattern)
+    end
+    users_array
+  end
+
+  def search(username)
     filter      = Net::LDAP::Filter.eq(LDAP_CONFIG['account_key'], username)
     treebase    = LDAP_CONFIG['treebase']
     search_attr = LDAP_CONFIG['search_keys']
