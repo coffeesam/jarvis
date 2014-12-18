@@ -8,6 +8,11 @@ development:
   ad_suffix: '@example.com'
   treebase: 'ou=sg,dc=example,dc=com'
   account_key: 'sAMAccountName'
+  name_key: 'displayName'
+  department_key: 'department'
+  title_key: 'title'
+  email_key: 'mail'
+  person_key: 'objectcategory'
   search_keys:
     - dn
     - sAMAccountName
@@ -30,6 +35,11 @@ test:
   ad_suffix: '@example.com'
   treebase: 'ou=sg,dc=example,dc=com'
   account_key: 'sAMAccountName'
+  name_key: 'displayName'
+  department_key: 'department'
+  title_key: 'title'
+  email_key: 'mail'
+  person_key: 'objectcategory'
   search_keys:
     - dn
     - sAMAccountName
@@ -51,6 +61,11 @@ production:
   ad_suffix: '@example.com'
   treebase: 'ou=sg,dc=example,dc=com'
   account_key: 'sAMAccountName'
+  name_key: 'displayName'
+  department_key: 'department'
+  title_key: 'title'
+  email_key: 'mail'
+  person_key: 'objectcategory'
   search_keys:
     - dn
     - sAMAccountName
