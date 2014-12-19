@@ -32,7 +32,12 @@ describe Ldap do
   describe "#authenticate" do
     context 'when connecting' do
       it 'attempts to create a LDAP connection' do
-        fake_entry = {sAMAccountName: 'test', mail:'test@example.com', objectcategory: 'CN=Person'}
+        fake_entry = { sAMAccountName: ['test'],
+                       mail: ['test@example.com'],
+                       objectcategory: 'CN=Person',
+                       displayName: ['Tester'],
+                       department: 'Test department',
+                       title: 'Test Manager' }
         fake_user = User.new(fake_entry)
         expect_any_instance_of(Net::LDAP).to receive(:bind).and_return(true)
         expect_any_instance_of(Ldap).to receive(:search).and_return([fake_user])
@@ -55,13 +60,14 @@ describe Ldap do
       context 'with a set of correct username and password' do
         before do
           expect_any_instance_of(Net::LDAP).to receive(:bind).and_return(true)
-          ldap_user = [{
-            :sAMAccountName => ['test'],
-            :mail => ['test@example.com'],
-            :objectcategory => "CN=Person"
-          }]
+          fake_entry = { sAMAccountName: ['test'],
+            mail: ['test@example.com'],
+            objectcategory: 'CN=Person',
+            displayName: ['Tester'],
+            department: 'Test department',
+            title: 'Test Manager' }
           expect_any_instance_of(Net::LDAP).
-            to receive(:search).at_least(:once).and_return(ldap_user)
+            to receive(:search).at_least(:once).and_return([fake_entry])
         end
 
         it 'returns a user object with the username and email filled up' do
