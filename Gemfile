@@ -1,16 +1,9 @@
 source 'https://rubygems.org'
 
-
 ruby '2.1.1'
 gem 'rails', '4.1.4'
-
 gem 'rails-api'
-
 gem 'spring', :group => :development
-
-
-
-
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
@@ -28,7 +21,6 @@ gem 'spring', :group => :development
 # gem 'ruby-debug19', :require => 'ruby-debug'
 
 gem 'haml-rails'
-gem 'pg'
 gem 'net-ldap'
 gem 'dalli'
 
@@ -58,7 +50,6 @@ end
 
 group :test do
   gem 'capybara'
-  gem 'database_cleaner'
   gem 'launchy'
   gem 'selenium-webdriver'
 end
