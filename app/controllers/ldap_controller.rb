@@ -31,7 +31,7 @@ class LdapController < ApplicationController
 
   def check_token
     unless valid_ip? && exists_config_and_header? && valid_token?
-      true #raise "Error"
+      raise "Error"
     end
   end
 
