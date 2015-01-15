@@ -36,8 +36,10 @@ class LdapController < ApplicationController
   end
 
   def valid_ip?
-    ip_address = request.remote_ip # ignore request.env['HTTP_X_REAL_IP']
-    LDAP_CONFIG['valid_ips'].include?(ip_address)
+    direct_ip  = request.ip
+    browser_ip = request.remote_ip
+    LDAP_CONFIG['valid_ips'].include?(direct_ip) ||
+      LDAP_CONFIG['valid_ips'].include?(browser_ip)
   end
 
   def exists_config_and_header?
