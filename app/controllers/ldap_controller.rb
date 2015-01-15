@@ -31,7 +31,7 @@ class LdapController < ApplicationController
 
   def check_token
     unless valid_ip? && exists_config_and_header? && valid_token?
-      raise "Error"
+      render :json => {status: 'Bad auth token or invalid IP address'}, :layout => nil, :format => [:text], :status => 401
     end
   end
 
