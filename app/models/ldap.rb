@@ -7,13 +7,17 @@ class Ldap
     @user       = nil
     @username   = username
     @password   = password
-    @connection = Net::LDAP.new(:host => LDAP_CONFIG['host'],
-    :port => LDAP_CONFIG['port'],
-    :auth => {
-      :method => LDAP_CONFIG['auth']['method'].to_sym,
-      :username => "#{@username}#{LDAP_CONFIG['ad_suffix']}",
-      :password => @password
-    })
+    if username.present? && password.present?
+      @connection = Net::LDAP.new(:host => LDAP_CONFIG['host'],
+      :port => LDAP_CONFIG['port'],
+      :auth => {
+        :method => LDAP_CONFIG['auth']['method'].to_sym,
+        :username => "#{@username}#{LDAP_CONFIG['ad_suffix']}",
+        :password => @password
+      })
+    else
+      raise 'Empty username or password'
+    end
   end
 
   def connect

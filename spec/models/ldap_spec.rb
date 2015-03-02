@@ -4,6 +4,20 @@ require 'rails_helper'
 describe Ldap do
   describe "#new" do
     context "when initializing" do
+      context 'with a blank username or password' do
+        it 'raises an error for empty username' do
+          expect{Ldap.new('', 'password')}.to raise_error
+        end
+
+        it 'raises an error for empty password' do
+          expect{Ldap.new('test', '')}.to raise_error
+        end
+
+        it 'raises an error for both empty username and password' do
+          expect{Ldap.new('', '')}.to raise_error
+        end
+      end
+
       context 'with username and password' do
         it 'returns a Ldap instance' do
           expect(Ldap.new('test', 'password')).to be_an_instance_of Ldap
