@@ -1,5 +1,5 @@
 class User
-  attr_accessor :username, :email, :display_name, :department, :title
+  attr_accessor :username, :email, :display_name, :department, :title, :employee_no
 
   def self.valid?(entry)
     entry.present? && User.person?(entry)
@@ -10,10 +10,12 @@ class User
   end
 
   def initialize(entry)
-    @username     = entry[LDAP_CONFIG['account_key'].to_sym].first
-    @email        = entry[LDAP_CONFIG['email_key'].to_sym].first
-    @display_name = entry[LDAP_CONFIG['name_key'].to_sym].first
-    @department   = entry[LDAP_CONFIG['department_key'].to_sym]
-    @title        = entry[LDAP_CONFIG['title_key'].to_sym]
+    @username       = entry[LDAP_CONFIG['account_key'].to_sym].first
+    @email          = entry[LDAP_CONFIG['email_key'].to_sym].first
+    @display_name   = entry[LDAP_CONFIG['name_key'].to_sym].first
+    @department     = entry[LDAP_CONFIG['department_key'].to_sym]
+    @title          = entry[LDAP_CONFIG['title_key'].to_sym]
+    @employee_no    = entry[LDAP_CONFIG['employee_id_key'].to_sym].presence
+    @employee_no  ||= entry[LDAP_CONFIG['employee_no_key'].to_sym]
   end
 end

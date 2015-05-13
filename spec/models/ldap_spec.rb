@@ -51,7 +51,9 @@ describe Ldap do
                        objectcategory: 'CN=Person',
                        displayName: ['Tester'],
                        department: 'Test department',
-                       title: 'Test Manager' }
+                       title: 'Test Manager',
+                       employeeID: '123456',
+                       employeeNumber: '123456' }
         fake_user = User.new(fake_entry)
         expect_any_instance_of(Net::LDAP).to receive(:bind).and_return(true)
         expect_any_instance_of(Ldap).to receive(:search).and_return([fake_user])
@@ -79,7 +81,9 @@ describe Ldap do
             objectcategory: 'CN=Person',
             displayName: ['Tester'],
             department: 'Test department',
-            title: 'Test Manager' }
+            title: 'Test Manager',
+            employeeID: '123456',
+            employeeNumber: '123456' }
           expect_any_instance_of(Net::LDAP).
             to receive(:search).at_least(:once).and_return([fake_entry])
         end

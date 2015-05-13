@@ -3,11 +3,11 @@ require 'net/ldap'
 class Ldap
   attr_accessor :username, :password, :connection, :user
 
-  def initialize(username=nil, password=nil)
+  def initialize(username=nil, password=nil, search_mode=false)
     @user       = nil
     @username   = username
     @password   = password
-    if username.present? && password.present?
+    if (username.present? && password.present?) || (username.present? && search_mode)
       @connection = Net::LDAP.new(:host => LDAP_CONFIG['host'],
       :port => LDAP_CONFIG['port'],
       :auth => {
@@ -41,7 +41,7 @@ class Ldap
   def retrieve_by_id(username)
     users = self.fetch_search_cache
     users.detect do |user|
-      username == user.username
+      username.downcase == user.username.downcase
     end
   end
 

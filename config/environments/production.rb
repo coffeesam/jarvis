@@ -11,7 +11,7 @@ Rails.application.configure do
   config.eager_load = true
 
   # Enable memcache
-  config.cache_store = :dalli_store, 'localhost', { namespace: 'jarvis-production', expires_in: 1.day }
+  config.cache_store = :dalli_store, 'localhost', { namespace: 'jarvis-production', expires_in: 2.hours }
 
 
   # Full error reports are disabled and caching is turned on.

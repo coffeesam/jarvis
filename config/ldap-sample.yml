@@ -13,6 +13,8 @@ development:
   title_key: 'title'
   email_key: 'mail'
   person_key: 'objectcategory'
+  employee_id_key: 'employeeID'
+  employee_no_key: 'employeeNumber'
   search_keys:
     - dn
     - sAMAccountName
@@ -21,6 +23,8 @@ development:
     - department
     - title
     - objectcategory
+    - employeeID
+    - employeeNumber
   auth_token: '12345'
   valid_ips:
     - '127.0.0.2'
@@ -40,6 +44,8 @@ test:
   title_key: 'title'
   email_key: 'mail'
   person_key: 'objectcategory'
+  employee_id_key: 'employeeID'
+  employee_no_key: 'employeeNumber'
   search_keys:
     - dn
     - sAMAccountName
@@ -48,6 +54,8 @@ test:
     - department
     - title
     - objectcategory
+    - employeeID
+    - employeeNumber
   auth_token: '12345'
   valid_ips:
     - '127.0.0.1'
@@ -66,6 +74,8 @@ production:
   title_key: 'title'
   email_key: 'mail'
   person_key: 'objectcategory'
+  employee_id_key: 'employeeID'
+  employee_no_key: 'employeeNumber'
   search_keys:
     - dn
     - sAMAccountName
@@ -74,6 +84,8 @@ production:
     - department
     - title
     - objectcategory
+    - employeeID
+    - employeeNumber
   auth_token: '12345'
   valid_ips:
     - '127.0.0.1'
