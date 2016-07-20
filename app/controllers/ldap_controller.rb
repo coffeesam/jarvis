@@ -16,7 +16,7 @@ class LdapController < ApplicationController
 
   def search
     if Rails.cache.exist?(ldap_params[:username])
-      ldap = Ldap.new(ldap_params[:username])
+      ldap = Ldap.new(ldap_params[:username], nil, true) #search mode
       render json: ldap.match(/#{ldap_params[:q]}/i)
     else
       render json: { status: 'error', message: 'Please authenticate before performing search.' }

@@ -4,6 +4,20 @@ require 'rails_helper'
 describe Ldap do
   describe "#new" do
     context "when initializing" do
+      context 'with a blank username or password' do
+        it 'raises an error for empty username' do
+          expect{Ldap.new('', 'password')}.to raise_error
+        end
+
+        it 'raises an error for empty password' do
+          expect{Ldap.new('test', '')}.to raise_error
+        end
+
+        it 'raises an error for both empty username and password' do
+          expect{Ldap.new('', '')}.to raise_error
+        end
+      end
+
       context 'with username and password' do
         it 'returns a Ldap instance' do
           expect(Ldap.new('test', 'password')).to be_an_instance_of Ldap
@@ -37,7 +51,9 @@ describe Ldap do
                        objectcategory: 'CN=Person',
                        displayName: ['Tester'],
                        department: 'Test department',
-                       title: 'Test Manager' }
+                       title: 'Test Manager',
+                       employeeID: '123456',
+                       employeeNumber: '123456' }
         fake_user = User.new(fake_entry)
         expect_any_instance_of(Net::LDAP).to receive(:bind).and_return(true)
         expect_any_instance_of(Ldap).to receive(:search).and_return([fake_user])
@@ -65,7 +81,9 @@ describe Ldap do
             objectcategory: 'CN=Person',
             displayName: ['Tester'],
             department: 'Test department',
-            title: 'Test Manager' }
+            title: 'Test Manager',
+            employeeID: '123456',
+            employeeNumber: '123456' }
           expect_any_instance_of(Net::LDAP).
             to receive(:search).at_least(:once).and_return([fake_entry])
         end
